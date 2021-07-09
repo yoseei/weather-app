@@ -13,7 +13,7 @@ type ResultStateType = {
   tempMax: string;
   tempMin: string;
   windSpeed: string;
-  windDeg: string;
+  windDeg: string | number;
   pressure: string;
   humidity: string;
 };
@@ -64,6 +64,19 @@ function App() {
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
   };
+
+  const deg = () => {
+    if (result.windDeg >= 0 && result.windDeg <= 90) {
+      return <p>北寄りの風</p>;
+    } else if (result.windDeg >= 90 && result.windDeg <= 180) {
+      return <p>東寄りの風</p>;
+    } else if (result.windDeg >= 180 && result.windDeg <= 270) {
+      return <p>南寄りの風</p>;
+    } else {
+      return <p>西寄りの風</p>;
+    }
+  };
+  console.log(deg);
   return (
     <div className={styles.root}>
       <SearchArea
