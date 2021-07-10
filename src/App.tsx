@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styles from "./App.module.scss";
 import CurrentWeather from "./components/currentWeather/CurrentWeather";
+import GoogleMap from "./components/googleMap/GoogleMap";
 import SearchArea from "./components/searchArea/SearchArea";
 
 type ResultStateType = {
@@ -13,14 +15,14 @@ type ResultStateType = {
   tempMax: string;
   tempMin: string;
   windSpeed: string;
-  windDeg: string | number;
+  windDeg: string;
   pressure: string;
   humidity: string;
 };
 
 function App() {
   const [cityName, setCityName] = useState("");
-  const [result, setResult] = useState<ResultStateType>({
+  const [currentResult, setCurrentResult] = useState<ResultStateType>({
     lon: "",
     lat: "",
     city: "",
@@ -35,56 +37,71 @@ function App() {
     humidity: "",
   });
 
-  const getData = (e: any) => {
+  const getCurrentWeather = async (e: any) => {
     e.preventDefault();
     const apiKey = process.env.REACT_APP_OW_API_KEY;
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`
-    )
-      .then((res) => res.json())
-      .then((data) =>
-        setResult({
-          lon: data.coord.lon,
-          lat: data.coord.lat,
-          city: data.name,
-          icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-          temp: data.main.temp,
-          feelsLike: data.main.feels_like,
-          tempMax: data.main.temp_max,
-          tempMin: data.main.temp_min,
-          windSpeed: data.wind.speed,
-          windDeg: data.wind.deg,
-          pressure: data.main.pressure,
-          humidity: data.main.humidity,
-        })
-      );
-    console.log(result);
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`;
+    try {
+      const response = await axios.get(url);
+      const { data } = response;
+      const currentWeatherData = {
+        lon: data.coord.lon,
+        lat: data.coord.lat,
+        city: data.name,
+        icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+        temp: data.main.temp,
+        feelsLike: data.main.feels_like,
+        tempMax: data.main.temp_max,
+        tempMin: data.main.temp_min,
+        windSpeed: data.wind.speed,
+        windDeg: data.wind.deg,
+        pressure: data.main.pressure,
+        humidity: data.main.humidity,
+      };
+      setCurrentResult(currentWeatherData);
+    } catch (err) {
+      console.error(err);
+    }
+    // fetch(
+    //   `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`
+    // )
+    //   .then((res) => res.json())
+    //   .then((data) =>
+    //     setResult({
+    //       lon: data.coord.lon,
+    //       lat: data.coord.lat,
+    //       city: data.name,
+    //       icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
+    //       temp: data.main.temp,
+    //       feelsLike: data.main.feels_like,
+    //       tempMax: data.main.temp_max,
+    //       tempMin: data.main.temp_min,
+    //       windSpeed: data.wind.speed,
+    //       windDeg: data.wind.deg,
+    //       pressure: data.main.pressure,
+    //       humidity: data.main.humidity,
+    //     })
+    //   );
+    // console.log(result);
   };
 
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
   };
 
-  const deg = () => {
-    if (result.windDeg >= 0 && result.windDeg <= 90) {
-      return <p>北寄りの風</p>;
-    } else if (result.windDeg >= 90 && result.windDeg <= 180) {
-      return <p>東寄りの風</p>;
-    } else if (result.windDeg >= 180 && result.windDeg <= 270) {
-      return <p>南寄りの風</p>;
-    } else {
-      return <p>西寄りの風</p>;
-    }
-  };
-  console.log(deg);
+  console.log(currentResult);
+
   return (
     <div className={styles.root}>
       <SearchArea
         cityName={cityName}
-        getData={getData}
+        getCurrentWeather={getCurrentWeather}
         handleSetCityName={handleSetCityName}
       />
-      <CurrentWeather result={result} />
+      <div className={styles.middle_container}>
+        <CurrentWeather result={currentResult} />
+        <GoogleMap result={currentResult} />
+      </div>
     </div>
   );
 }

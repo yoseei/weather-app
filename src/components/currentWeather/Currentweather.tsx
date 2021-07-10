@@ -22,6 +22,20 @@ const month = today.getMonth() + 1;
 const day = today.getDate();
 
 const CurrentWeather = ({ result }: PropsType) => {
+  const deg = result.windDeg;
+
+  const degWords = () => {
+    if (deg >= 46 && deg <= 135) {
+      return "東寄りの風";
+    } else if (deg >= 136 && deg <= 225) {
+      return "南寄りの風";
+    } else if (deg >= 226 && deg <= 315) {
+      return "南寄りの風";
+    } else {
+      return "北寄りの風";
+    }
+  };
+
   return (
     <div className={styles.root}>
       <p>
@@ -35,7 +49,7 @@ const CurrentWeather = ({ result }: PropsType) => {
         {result.tempMin}℃
       </p>
       <p>
-        <span>|</span> 風:{result.windSpeed}m/s 風向き:{} 気圧:
+        <span>|</span> 風:{result.windSpeed}m/s 風向き:{degWords()} 気圧:
         {result.pressure}hPa 湿度:{result.humidity}%
       </p>
     </div>

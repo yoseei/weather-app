@@ -4,9 +4,13 @@ import styles from "./SearchArea.module.scss";
 type PropsType = {
   cityName: string;
   handleSetCityName: React.ChangeEventHandler<HTMLInputElement>;
-  getData: (e: any) => void;
+  getCurrentWeather: (e: any) => void;
 };
-const SearchArea = ({ cityName, handleSetCityName, getData }: PropsType) => {
+const SearchArea = ({
+  cityName,
+  handleSetCityName,
+  getCurrentWeather,
+}: PropsType) => {
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -18,7 +22,7 @@ const SearchArea = ({ cityName, handleSetCityName, getData }: PropsType) => {
             type="text"
             placeholder="(例)東京"
           />
-          <button onClick={getData}>検索する</button>
+          <button onClick={getCurrentWeather}>検索する</button>
         </form>
       </div>
     </div>
