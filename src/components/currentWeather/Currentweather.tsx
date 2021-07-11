@@ -25,14 +25,18 @@ const CurrentWeather = ({ result }: PropsType) => {
   const deg = result.windDeg;
 
   const degWords = () => {
-    if (deg >= 46 && deg <= 135) {
+    if (deg >= 1 && deg <= 45) {
+      return "北寄りの風";
+    } else if (deg >= 46 && deg <= 135) {
       return "東寄りの風";
     } else if (deg >= 136 && deg <= 225) {
       return "南寄りの風";
     } else if (deg >= 226 && deg <= 315) {
-      return "南寄りの風";
-    } else {
+      return "西寄りの風";
+    } else if (deg >= 316 && deg <= 360) {
       return "北寄りの風";
+    } else {
+      return "";
     }
   };
 
@@ -43,7 +47,7 @@ const CurrentWeather = ({ result }: PropsType) => {
       </p>
       <h2>{result.city}</h2>
       <img src={result.icon} alt="icon" />
-      <div>{result.temp}</div>
+      <div>{result.temp}℃</div>
       <p>
         体感温度:{result.feelsLike}℃ 最高気温:{result.tempMax}℃ 最低気温:
         {result.tempMin}℃

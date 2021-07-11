@@ -1,32 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./GoogleMap.module.scss";
 import GoogleMapReact from "google-map-react";
 
 type ResultStateType = {
-  result: {
+  currentResult: {
     lon: string;
     lat: string;
   };
 };
 
-const GoogleMap = ({ result }: ResultStateType) => {
-  const [map, setMap] = useState(null);
+const GoogleMap = ({ currentResult }: ResultStateType) => {
   // result.lon:'123' 先程のNumber関数を用いて数値に変換する
+  const center = {
+    lat: Number(currentResult.lat),
+    lng: Number(currentResult.lon),
+  };
+  const GoogleMapAPIKey = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
-  const center = { lat: Number(result.lat), lng: Number(result.lon) };
+  const handleApiLoaded = ({ map, maps }: any) => {
+    new maps.Marker({
+      map,
+      position: defaultLatLng,
+    });
+  };
 
-  console.log(center);
   const defaultLatLng = {
-    lat: 35.39,
-    lng: 139.44,
+    lat: 35.7022589,
+    lng: 139.7744733,
   };
 
   return (
     <div style={{ height: "300px", width: "300px" }}>
       <GoogleMapReact
+        bootstrapURLKeys={{ key: GoogleMapAPIKey }}
         defaultCenter={defaultLatLng}
-        defaultZoom={8}
+        defaultZoom={12}
         center={center}
+        onGoogleApiLoaded={handleApiLoaded}
+        yesIWantToUseGoogleMapApiInternals={true}
       />
     </div>
   );

@@ -62,27 +62,6 @@ function App() {
     } catch (err) {
       console.error(err);
     }
-    // fetch(
-    //   `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`
-    // )
-    //   .then((res) => res.json())
-    //   .then((data) =>
-    //     setResult({
-    //       lon: data.coord.lon,
-    //       lat: data.coord.lat,
-    //       city: data.name,
-    //       icon: `http://openweathermap.org/img/w/${data.weather[0].icon}.png`,
-    //       temp: data.main.temp,
-    //       feelsLike: data.main.feels_like,
-    //       tempMax: data.main.temp_max,
-    //       tempMin: data.main.temp_min,
-    //       windSpeed: data.wind.speed,
-    //       windDeg: data.wind.deg,
-    //       pressure: data.main.pressure,
-    //       humidity: data.main.humidity,
-    //     })
-    //   );
-    // console.log(result);
   };
 
   const handleSetCityName = (e: any) => {
@@ -100,7 +79,7 @@ function App() {
       />
       <div className={styles.middle_container}>
         <CurrentWeather result={currentResult} />
-        <GoogleMap result={currentResult} />
+        <GoogleMap currentResult={currentResult} />
       </div>
     </div>
   );
