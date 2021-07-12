@@ -4,8 +4,8 @@ import GoogleMapReact from "google-map-react";
 
 type ResultStateType = {
   currentResult: {
-    lon: string;
-    lat: string;
+    lon: number;
+    lat: number;
   };
 };
 

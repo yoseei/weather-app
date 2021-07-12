@@ -2,25 +2,25 @@ import React from "react";
 import styles from "./CurrentWeather.module.scss";
 type PropsType = {
   result: {
-    lon: string;
-    lat: string;
     city: string;
-    icon: string;
     temp: string;
-    feelsLike: string;
-    tempMax: string;
-    tempMin: string;
-    windSpeed: string;
-    windDeg: string | number;
+    feels_like: string;
     pressure: string;
     humidity: string;
+    wind_speed: string;
+    wind_deg: string | number;
+    icon: string;
+  };
+  dailyResult: {
+    min_temp: number;
+    max_temp: number;
   };
   day: number;
   month: number;
 };
 
-const CurrentWeather = ({ result, day, month }: PropsType) => {
-  const deg = result.windDeg;
+const CurrentWeather = ({ result, day, dailyResult, month }: PropsType) => {
+  const deg = result.wind_deg;
 
   const degWords = () => {
     if (deg >= 1 && deg <= 45) {
@@ -47,11 +47,11 @@ const CurrentWeather = ({ result, day, month }: PropsType) => {
       <img src={result.icon} alt="icon" />
       <div>{result.temp}℃</div>
       <p>
-        体感温度:{result.feelsLike}℃ 最高気温:{result.tempMax}℃ 最低気温:
-        {result.tempMin}℃
+        体感温度:{result.feels_like}℃ 最高気温:{dailyResult.max_temp}℃ 最低気温:
+        {dailyResult.min_temp}℃
       </p>
       <p>
-        <span>|</span> 風:{result.windSpeed}m/s 風向き:{degWords()} 気圧:
+        <span>|</span> 風:{result.wind_speed}m/s 風向き:{degWords()} 気圧:
         {result.pressure}hPa 湿度:{result.humidity}%
       </p>
     </div>
