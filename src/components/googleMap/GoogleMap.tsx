@@ -10,6 +10,11 @@ type ResultStateType = {
 };
 
 const GoogleMap = ({ currentResult }: ResultStateType) => {
+  const defaultLatLng = {
+    lat: 35.7022589,
+    lng: 139.7744733,
+  };
+
   // result.lon:'123' 先程のNumber関数を用いて数値に変換する
   const center = {
     lat: Number(currentResult.lat),
@@ -24,18 +29,13 @@ const GoogleMap = ({ currentResult }: ResultStateType) => {
     });
   };
 
-  const defaultLatLng = {
-    lat: 35.7022589,
-    lng: 139.7744733,
-  };
-
   return (
     <div style={{ height: "300px", width: "300px" }}>
       <GoogleMapReact
+        center={center}
         bootstrapURLKeys={{ key: GoogleMapAPIKey }}
         defaultCenter={defaultLatLng}
         defaultZoom={12}
-        center={center}
         onGoogleApiLoaded={handleApiLoaded}
         yesIWantToUseGoogleMapApiInternals={true}
       />

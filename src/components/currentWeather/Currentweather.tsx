@@ -15,13 +15,11 @@ type PropsType = {
     pressure: string;
     humidity: string;
   };
+  day: number;
+  month: number;
 };
 
-const today = new Date();
-const month = today.getMonth() + 1;
-const day = today.getDate();
-
-const CurrentWeather = ({ result }: PropsType) => {
+const CurrentWeather = ({ result, day, month }: PropsType) => {
   const deg = result.windDeg;
 
   const degWords = () => {

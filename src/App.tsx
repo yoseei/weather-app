@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./App.module.scss";
 import CurrentWeather from "./components/currentWeather/CurrentWeather";
 import GoogleMap from "./components/googleMap/GoogleMap";
+import Recharts from "./components/recharts/Recharts";
 import SearchArea from "./components/searchArea/SearchArea";
 
 type ResultStateType = {
@@ -19,6 +20,11 @@ type ResultStateType = {
   pressure: string;
   humidity: string;
 };
+
+const today = new Date();
+const month = today.getMonth() + 1;
+const day = today.getDate();
+const hour = today.getHours();
 
 function App() {
   const [cityName, setCityName] = useState("");
@@ -41,6 +47,7 @@ function App() {
     e.preventDefault();
     const apiKey = process.env.REACT_APP_OW_API_KEY;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`;
+
     try {
       const response = await axios.get(url);
       const { data } = response;
@@ -78,8 +85,11 @@ function App() {
         handleSetCityName={handleSetCityName}
       />
       <div className={styles.middle_container}>
-        <CurrentWeather result={currentResult} />
+        <CurrentWeather result={currentResult} day={day} month={month} />
         <GoogleMap currentResult={currentResult} />
+      </div>
+      <div className={styles.bottom_container}>
+        <Recharts hour={hour} />
       </div>
     </div>
   );
