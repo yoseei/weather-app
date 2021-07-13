@@ -110,6 +110,7 @@ function App() {
     getWeatherDates();
   }, [apiKey, currentLat, currentLng]);
 
+  console.log(dailiesArray);
   let i = 0;
   for (i; i >= 6; i++) {
     console.log(dailiesArray[i]);
