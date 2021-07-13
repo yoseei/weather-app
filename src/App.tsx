@@ -1,86 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./App.module.scss";
 import CurrentWeather from "./components/currentWeather/CurrentWeather";
 import GoogleMap from "./components/googleMap/GoogleMap";
 import Recharts from "./components/recharts/Recharts";
 import SearchArea from "./components/searchArea/SearchArea";
+import WeeklyWeather from "./components/weeklyWeather/WeeklyWeather";
 
-type ResultStateType = {
-  lat: number;
-  lon: number;
-  city: string;
-  temp: string;
+type CurrentResultStateType = {
+  timezone: string;
   feels_like: string;
-  pressure: string;
   humidity: string;
-  wind_speed: string;
-  wind_deg: string | number;
+  pressure: string;
+  temp: string;
   icon: string;
+  wind_deg: string;
+  wind_speed: string;
 };
 
-type DailyResultStateType = {
-  min_temp: number;
-  max_temp: number;
+type tempMinMaxStateType = {
+  min_temp: string;
+  max_temp: string;
 };
 const today = new Date();
 const month = today.getMonth() + 1;
-const day = today.getDate();
+const date = today.getDate();
 const hour = today.getHours();
 
 function App() {
+  const apiKey = process.env.REACT_APP_OW_API_KEY;
+
   const [cityName, setCityName] = useState("");
-  const [currentResult, setCurrentResult] = useState<ResultStateType>({
-    lat: 0,
-    lon: 0,
-    city: "",
-    temp: "",
+  const [currentCityName, setCurrentCityName] = useState("");
+  const [currentLat, setCurrentLat] = useState<any>(33.2381);
+  const [currentLng, setCurrentLng] = useState<any>(131.6125);
+  const [currentResult, setCurrentResult] = useState<CurrentResultStateType>({
+    timezone: "",
     feels_like: "",
-    pressure: "",
     humidity: "",
-    wind_speed: "",
-    wind_deg: "",
+    pressure: "",
+    temp: "",
     icon: "",
+    wind_deg: "",
+    wind_speed: "",
   });
-  const [dailyResult, setDailyResult] = useState<DailyResultStateType>({
-    min_temp: 0,
-    max_temp: 0,
+  const [dailiesArray, setDailiesArray] = useState<any>([]);
+  const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
+    min_temp: "",
+    max_temp: "",
   });
 
-  const getCurrentWeather = async (e: any) => {
+  // 入力した地名から緯度経度を取得する関数
+  const getLatLng = async (e: any) => {
     e.preventDefault();
-    const apiKey = process.env.REACT_APP_OW_API_KEY;
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric&lang=ja`;
-    const url = `https://api.openweathermap.org/data/2.5/onecall?lat=33.44&lon=94.04&appid=${apiKey}&lang=ja&units=metric`;
+    const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
+
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(geoCodingApiUrl);
       const { data } = response;
 
-      const currentWeatherData = {
-        lat: data.lat,
-        lon: data.lon,
-        city: data.timezone,
-        temp: data.current.temp,
-        feels_like: data.current.feels_like,
-        pressure: data.current.pressure,
-        humidity: data.current.humidity,
-        wind_speed: data.current.wind_speed,
-        wind_deg: data.current.wind_deg,
-        icon: `http://openweathermap.org/img/wn/${data.hourly[0].weather[0].icon}.png`,
+      const currentLatLng = {
+        lat: data[0].lat,
+        lng: data[0].lon,
       };
-      const DailyWeatherData = {
-        min_temp: data.daily[0].temp.min,
-        max_temp: data.daily[0].temp.max,
-      };
-      setCurrentResult(currentWeatherData);
-      setDailyResult(DailyWeatherData);
+      setCurrentCityName(data[0].name);
+      setCurrentLat(currentLatLng.lat);
+      setCurrentLng(currentLatLng.lng);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
 
-  console.log(currentResult);
-  console.log(dailyResult);
+  useEffect(() => {
+    const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentLat}&lon=${currentLng}&appid=${apiKey}&lang=ja&units=metric`;
+
+    async function getWeatherDates() {
+      try {
+        const response = await axios.get(oneCallApiUrl);
+        const { data } = response;
+        console.log(data);
+
+        // 現在の天気情報
+        const currentWeatherData = {
+          timezone: data.timezone,
+          feels_like: data.current.feels_like,
+          humidity: data.current.humidity,
+          pressure: data.current.pressure,
+          temp: data.current.temp,
+          icon: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`,
+          wind_deg: data.current.wind_deg,
+          wind_speed: data.current.wind_speed,
+        };
+        setCurrentResult(currentWeatherData);
+
+        // temp MIN MAXを取得
+        const tempMinMaxData = {
+          min_temp: data.daily[0].temp.min,
+          max_temp: data.daily[0].temp.max,
+        };
+        setTempMinMaxData(tempMinMaxData);
+
+        // dailies Dataを取得
+        const dailiesData = [data.daily];
+        setDailiesArray(dailiesData[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getWeatherDates();
+  }, [apiKey, currentLat, currentLng]);
+
+  let i = 0;
+  for (i; i >= 6; i++) {
+    console.log(dailiesArray[i]);
+  }
 
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
@@ -89,20 +122,22 @@ function App() {
     <div className={styles.root}>
       <SearchArea
         cityName={cityName}
-        getCurrentWeather={getCurrentWeather}
+        getLatLng={getLatLng}
         handleSetCityName={handleSetCityName}
       />
       <div className={styles.middle_container}>
         <CurrentWeather
-          result={currentResult}
-          day={day}
+          currentResult={currentResult}
+          date={date}
           month={month}
-          dailyResult={dailyResult}
+          tempMinMaxData={tempMinMaxData}
+          currentCityName={currentCityName}
         />
-        <GoogleMap currentResult={currentResult} />
+        <GoogleMap currentLat={currentLat} currentLng={currentLng} />
       </div>
       <div className={styles.bottom_container}>
         <Recharts hour={hour} />
+        <WeeklyWeather />
       </div>
     </div>
   );

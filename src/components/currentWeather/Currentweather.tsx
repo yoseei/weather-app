@@ -1,26 +1,33 @@
 import React from "react";
 import styles from "./CurrentWeather.module.scss";
 type PropsType = {
-  result: {
-    city: string;
-    temp: string;
+  currentResult: {
+    timezone: string;
     feels_like: string;
-    pressure: string;
     humidity: string;
-    wind_speed: string;
-    wind_deg: string | number;
+    pressure: string;
+    temp: string;
     icon: string;
+    wind_deg: any;
+    wind_speed: string;
   };
-  dailyResult: {
-    min_temp: number;
-    max_temp: number;
+  tempMinMaxData: {
+    min_temp: string;
+    max_temp: string;
   };
-  day: number;
+  date: number;
   month: number;
+  currentCityName: string;
 };
 
-const CurrentWeather = ({ result, day, dailyResult, month }: PropsType) => {
-  const deg = result.wind_deg;
+const CurrentWeather = ({
+  currentResult,
+  date,
+  tempMinMaxData,
+  month,
+  currentCityName,
+}: PropsType) => {
+  const deg = currentResult.wind_deg;
 
   const degWords = () => {
     if (deg >= 1 && deg <= 45) {
@@ -41,18 +48,20 @@ const CurrentWeather = ({ result, day, dailyResult, month }: PropsType) => {
   return (
     <div className={styles.root}>
       <p>
-        {month}月{day}日 現在時刻
+        {month}月{date}日 現在時刻
       </p>
-      <h2>{result.city}</h2>
-      <img src={result.icon} alt="icon" />
-      <div>{result.temp}℃</div>
+      <h2>{currentCityName ? currentCityName : <p>現在地</p>}</h2>
+      <img src={currentResult.icon} alt="icon" />
+      <div>{currentResult.temp}℃</div>
       <p>
-        体感温度:{result.feels_like}℃ 最高気温:{dailyResult.max_temp}℃ 最低気温:
-        {dailyResult.min_temp}℃
+        体感温度:{currentResult.feels_like}℃ 最高気温:{tempMinMaxData.max_temp}℃
+        最低気温:
+        {tempMinMaxData.min_temp}℃
       </p>
       <p>
-        <span>|</span> 風:{result.wind_speed}m/s 風向き:{degWords()} 気圧:
-        {result.pressure}hPa 湿度:{result.humidity}%
+        <span>|</span> 風:{currentResult.wind_speed}m/s 風向き:{degWords()}{" "}
+        気圧:
+        {currentResult.pressure}hPa 湿度:{currentResult.humidity}%
       </p>
     </div>
   );
