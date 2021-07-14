@@ -46,7 +46,7 @@ function App() {
   });
   const [dailyArray, setDailyArray] = useState<any>();
   const [dailiesArray, setDailiesArray] = useState<any>([]);
-  const [hourlyArray, setHourlyArray] = useState<any>([]);
+  const [hourlyTempArray, setHourlyTempArray] = useState<any>([]);
   const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
     min_temp: "",
     max_temp: "",
@@ -103,8 +103,21 @@ function App() {
         };
         setTempMinMaxData(tempMinMaxData);
 
-        // hourly dataを取得
-        setHourlyArray(data.hourly);
+        // hourlyTempを取得
+        const hourlyTemp = [
+          data.hourly[0].temp,
+          data.hourly[1].temp,
+          data.hourly[2].temp,
+          data.hourly[3].temp,
+          data.hourly[4].temp,
+          data.hourly[5].temp,
+          data.hourly[6].temp,
+          data.hourly[7].temp,
+        ];
+
+        console.log(hourlyTemp);
+        // hourly Temp dataを取得
+        setHourlyTempArray(hourlyTemp);
 
         // dailies Dataを取得
         const dailiesData = [data.daily];
@@ -114,7 +127,7 @@ function App() {
       }
     }
     getWeatherDates();
-  }, []);
+  }, [apiKey, currentLat, currentLng]);
 
   // dailiesArray.forEach(function (daily: any) {
   //   const dailyWeatherData = {
@@ -147,7 +160,7 @@ function App() {
         <GoogleMap currentLat={currentLat} currentLng={currentLng} />
       </div>
       <div className={styles.bottom_container}>
-        <Recharts hour={hour} hourlyArray={hourlyArray} />
+        <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
         <WeeklyWeather />
       </div>
     </div>
