@@ -5,7 +5,7 @@ import CurrentWeather from "./components/currentWeather/CurrentWeather";
 import GoogleMap from "./components/googleMap/GoogleMap";
 import Recharts from "./components/recharts/Recharts";
 import SearchArea from "./components/searchArea/SearchArea";
-import WeeklyWeather from "./components/weeklyWeather/WeeklyWeather";
+import DailiesWeather from "./components/dailiesWeather/DailiesWeather";
 
 type CurrentResultStateType = {
   timezone: string;
@@ -46,6 +46,7 @@ function App() {
   });
   const [dailyArray, setDailyArray] = useState<any>();
   const [dailiesArray, setDailiesArray] = useState<any>([]);
+  const [dailiesWeather, setDailiesWeather] = useState<any>([]);
   const [hourlyTempArray, setHourlyTempArray] = useState<any>([]);
   const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
     min_temp: "",
@@ -73,6 +74,7 @@ function App() {
     }
   };
 
+  // OneCallApiで天気情報を取得
   useEffect(() => {
     const oneCallApiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentLat}&lon=${currentLng}&appid=${apiKey}&lang=ja&units=metric`;
 
@@ -80,8 +82,6 @@ function App() {
       try {
         const response = await axios.get(oneCallApiUrl);
         const { data } = response;
-        console.log(data.hourly);
-        console.log(data);
 
         // 現在の天気情報
         const currentWeatherData = {
@@ -114,14 +114,60 @@ function App() {
           data.hourly[6].temp,
           data.hourly[7].temp,
         ];
-
-        console.log(hourlyTemp);
-        // hourly Temp dataを取得
         setHourlyTempArray(hourlyTemp);
 
-        // dailies Dataを取得
-        const dailiesData = [data.daily];
-        setDailiesArray(dailiesData[0]);
+        // dailiesWeatherDataを取得
+        const dailiesArrayData = [data.daily];
+        const dailiesArray = dailiesArrayData[0];
+        let i = 0;
+        const dailiesWeatherData = [
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[0].weather[0].icon}.png`,
+            max_temp: dailiesArray[0].temp.max,
+            min_temp: dailiesArray[0].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[1].weather[0].icon}.png`,
+            max_temp: dailiesArray[1].temp.max,
+            min_temp: dailiesArray[1].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[2].weather[0].icon}.png`,
+            max_temp: dailiesArray[2].temp.max,
+            min_temp: dailiesArray[2].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[3].weather[0].icon}.png`,
+            max_temp: dailiesArray[3].temp.max,
+            min_temp: dailiesArray[3].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[4].weather[0].icon}.png`,
+            max_temp: dailiesArray[4].temp.max,
+            min_temp: dailiesArray[4].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[5].weather[0].icon}.png`,
+            max_temp: dailiesArray[5].temp.max,
+            min_temp: dailiesArray[5].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[6].weather[0].icon}.png`,
+            max_temp: dailiesArray[6].temp.max,
+            min_temp: dailiesArray[6].temp.min,
+          },
+          {
+            icon: `http://openweathermap.org/img/wn/${dailiesArray[7].weather[0].icon}.png`,
+            max_temp: dailiesArray[7].temp.max,
+            min_temp: dailiesArray[7].temp.min,
+          },
+        ];
+
+        setDailiesWeather(dailiesWeatherData);
+        console.log(dailiesWeather);
+        // console.log(dailiesWeatherData.icon);
+        // console.log(dailiesWeatherData);
+        // icon: `http://openweathermap.org/img/wn/${dailiesArray[0].weather[0].icon}.png`
       } catch (err) {
         console.log(err);
       }
@@ -161,7 +207,11 @@ function App() {
       </div>
       <div className={styles.bottom_container}>
         <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
-        <WeeklyWeather />
+        <DailiesWeather
+          month={month}
+          date={date}
+          dailiesWeather={dailiesWeather}
+        />
       </div>
     </div>
   );

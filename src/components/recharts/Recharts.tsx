@@ -14,8 +14,6 @@ type PropsType = {
 };
 
 const Recharts = ({ hour, hourlyTempArray }: PropsType) => {
-  // console.log(hourlyArray[0]);
-  // console.log(hourlyArray[1]);
   const data = [
     { name: `${hour}時`, temp: hourlyTempArray[0] },
     { name: `${hour + 1}時`, temp: hourlyTempArray[1] },
