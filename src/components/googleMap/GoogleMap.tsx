@@ -32,7 +32,6 @@ const GoogleMap = ({ currentLat, currentLng }: StateType) => {
       <GoogleMapReact
         center={center}
         bootstrapURLKeys={{ key: GoogleMapAPIKey }}
-        // defaultCenter={defaultLatLng}
         defaultZoom={12}
         onGoogleApiLoaded={handleApiLoaded}
         yesIWantToUseGoogleMapApiInternals={true}

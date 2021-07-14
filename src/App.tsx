@@ -44,7 +44,9 @@ function App() {
     wind_deg: "",
     wind_speed: "",
   });
+  const [dailyArray, setDailyArray] = useState<any>();
   const [dailiesArray, setDailiesArray] = useState<any>([]);
+  const [hourlyArray, setHourlyArray] = useState<any>([]);
   const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
     min_temp: "",
     max_temp: "",
@@ -78,6 +80,7 @@ function App() {
       try {
         const response = await axios.get(oneCallApiUrl);
         const { data } = response;
+        console.log(data.hourly);
         console.log(data);
 
         // 現在の天気情報
@@ -100,6 +103,9 @@ function App() {
         };
         setTempMinMaxData(tempMinMaxData);
 
+        // hourly dataを取得
+        setHourlyArray(data.hourly);
+
         // dailies Dataを取得
         const dailiesData = [data.daily];
         setDailiesArray(dailiesData[0]);
@@ -108,13 +114,17 @@ function App() {
       }
     }
     getWeatherDates();
-  }, [apiKey, currentLat, currentLng]);
+  }, []);
 
-  console.log(dailiesArray);
-  let i = 0;
-  for (i; i >= 6; i++) {
-    console.log(dailiesArray[i]);
-  }
+  // dailiesArray.forEach(function (daily: any) {
+  //   const dailyWeatherData = {
+  //     icon: `http://openweathermap.org/img/wn/${daily.weather[0].icon}.png`,
+  //     max_temp_: daily.temp.max,
+  //     min_temp: daily.temp.min,
+  //   };
+  //   console.log(dailyWeatherData);
+  //   // setDailyArray(dailyWeatherData);
+  // });
 
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
@@ -137,7 +147,7 @@ function App() {
         <GoogleMap currentLat={currentLat} currentLng={currentLng} />
       </div>
       <div className={styles.bottom_container}>
-        <Recharts hour={hour} />
+        <Recharts hour={hour} hourlyArray={hourlyArray} />
         <WeeklyWeather />
       </div>
     </div>

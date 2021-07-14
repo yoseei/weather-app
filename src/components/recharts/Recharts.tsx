@@ -10,18 +10,20 @@ import {
 
 type PropsType = {
   hour: number;
+  hourlyArray: any;
 };
 
-const Recharts = ({ hour }: PropsType) => {
+const Recharts = ({ hour, hourlyArray }: PropsType) => {
+  console.log(hourlyArray[0]);
   const data = [
-    { name: `${hour}時`, temp: 0, pv: 2400, amt: 2400 },
-    { name: `${hour + 1}時`, temp: 4, pv: 2500, amt: 2600 },
-    { name: `${hour + 2}時`, temp: 6, pv: 2600, amt: 2700 },
-    { name: `${hour + 3}時`, temp: 12, pv: 2700, amt: 2800 },
-    { name: `${hour + 4}時`, temp: 15, pv: 2800, amt: 2900 },
-    { name: `${hour + 5}時`, temp: 17, pv: 2800, amt: 2900 },
-    { name: `${hour + 6}時`, temp: 18, pv: 2800, amt: 2900 },
-    { name: `${hour + 7}時`, temp: 40, pv: 2800, amt: 2900 },
+    { name: `${hour}時`, temp: 0 },
+    // { name: `${hour + 1}時`, temp: hourlyArray[1].temp },
+    // { name: `${hour + 2}時`, temp: hourlyArray[2].temp },
+    // { name: `${hour + 3}時`, temp: hourlyArray[3].temp },
+    // { name: `${hour + 4}時`, temp: hourlyArray[4].temp },
+    // { name: `${hour + 5}時`, temp: hourlyArray[5].temp },
+    // { name: `${hour + 6}時`, temp: hourlyArray[6].temp },
+    // { name: `${hour + 7}時`, temp: hourlyArray[7].temp },
   ];
 
   return (
