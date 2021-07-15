@@ -1,10 +1,13 @@
 .root {
   width: 100vw;
   height: 100vh;
-  .middle_container {
-    display: flex;
-  }
-  .bottom_container {
-    display: flex;
+  .container {
+    margin: 0 auto;
+    .middle_container {
+      display: flex;
+    }
+    .bottom_container {
+      display: flex;
+    }
   }
 }

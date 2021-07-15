@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./App.module.scss";
 import CurrentWeather from "./components/currentWeather/CurrentWeather";
@@ -44,9 +44,9 @@ function App() {
     wind_deg: "",
     wind_speed: "",
   });
-  const [dailyArray, setDailyArray] = useState<any>();
-  const [dailiesArray, setDailiesArray] = useState<any>([]);
-  const [dailiesWeather, setDailiesWeather] = useState<any>([]);
+  const [dailiesIcon, setDailiesIcon] = useState<any>([]);
+  const [dailiesMaxTemp, setDailiesMaxTemp] = useState<any>([]);
+  const [dailiesMinTemp, setDailiesMinTemp] = useState<any>([]);
   const [hourlyTempArray, setHourlyTempArray] = useState<any>([]);
   const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
     min_temp: "",
@@ -119,55 +119,41 @@ function App() {
         // dailiesWeatherDataを取得
         const dailiesArrayData = [data.daily];
         const dailiesArray = dailiesArrayData[0];
-        let i = 0;
-        const dailiesWeatherData = [
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[0].weather[0].icon}.png`,
-            max_temp: dailiesArray[0].temp.max,
-            min_temp: dailiesArray[0].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[1].weather[0].icon}.png`,
-            max_temp: dailiesArray[1].temp.max,
-            min_temp: dailiesArray[1].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[2].weather[0].icon}.png`,
-            max_temp: dailiesArray[2].temp.max,
-            min_temp: dailiesArray[2].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[3].weather[0].icon}.png`,
-            max_temp: dailiesArray[3].temp.max,
-            min_temp: dailiesArray[3].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[4].weather[0].icon}.png`,
-            max_temp: dailiesArray[4].temp.max,
-            min_temp: dailiesArray[4].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[5].weather[0].icon}.png`,
-            max_temp: dailiesArray[5].temp.max,
-            min_temp: dailiesArray[5].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[6].weather[0].icon}.png`,
-            max_temp: dailiesArray[6].temp.max,
-            min_temp: dailiesArray[6].temp.min,
-          },
-          {
-            icon: `http://openweathermap.org/img/wn/${dailiesArray[7].weather[0].icon}.png`,
-            max_temp: dailiesArray[7].temp.max,
-            min_temp: dailiesArray[7].temp.min,
-          },
-        ];
 
-        setDailiesWeather(dailiesWeatherData);
-        console.log(dailiesWeather);
-        // console.log(dailiesWeatherData.icon);
-        // console.log(dailiesWeatherData);
-        // icon: `http://openweathermap.org/img/wn/${dailiesArray[0].weather[0].icon}.png`
+        const dailiesIconData = [
+          dailiesArray[0].weather[0].icon,
+          dailiesArray[1].weather[0].icon,
+          dailiesArray[2].weather[0].icon,
+          dailiesArray[3].weather[0].icon,
+          dailiesArray[4].weather[0].icon,
+          dailiesArray[5].weather[0].icon,
+          dailiesArray[6].weather[0].icon,
+        ];
+        setDailiesIcon(dailiesIconData);
+
+        const dailiesMaxTempData = [
+          dailiesArray[0].temp.max,
+          dailiesArray[1].temp.max,
+          dailiesArray[2].temp.max,
+          dailiesArray[3].temp.max,
+          dailiesArray[4].temp.max,
+          dailiesArray[5].temp.max,
+          dailiesArray[6].temp.max,
+        ];
+        setDailiesMaxTemp(dailiesMaxTempData);
+
+        const dailiesMinTempData = [
+          dailiesArray[0].temp.min,
+          dailiesArray[1].temp.min,
+          dailiesArray[2].temp.min,
+          dailiesArray[3].temp.min,
+          dailiesArray[4].temp.min,
+          dailiesArray[5].temp.min,
+          dailiesArray[6].temp.min,
+        ];
+        setDailiesMinTemp(dailiesMinTempData);
+
+        console.log(dailiesMinTemp);
       } catch (err) {
         console.log(err);
       }
@@ -175,43 +161,37 @@ function App() {
     getWeatherDates();
   }, [apiKey, currentLat, currentLng]);
 
-  // dailiesArray.forEach(function (daily: any) {
-  //   const dailyWeatherData = {
-  //     icon: `http://openweathermap.org/img/wn/${daily.weather[0].icon}.png`,
-  //     max_temp_: daily.temp.max,
-  //     min_temp: daily.temp.min,
-  //   };
-  //   console.log(dailyWeatherData);
-  //   // setDailyArray(dailyWeatherData);
-  // });
-
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
   };
   return (
     <div className={styles.root}>
-      <SearchArea
-        cityName={cityName}
-        getLatLng={getLatLng}
-        handleSetCityName={handleSetCityName}
-      />
-      <div className={styles.middle_container}>
-        <CurrentWeather
-          currentResult={currentResult}
-          date={date}
-          month={month}
-          tempMinMaxData={tempMinMaxData}
-          currentCityName={currentCityName}
+      <div className={styles.container}>
+        <SearchArea
+          cityName={cityName}
+          getLatLng={getLatLng}
+          handleSetCityName={handleSetCityName}
         />
-        <GoogleMap currentLat={currentLat} currentLng={currentLng} />
-      </div>
-      <div className={styles.bottom_container}>
-        <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
-        <DailiesWeather
-          month={month}
-          date={date}
-          dailiesWeather={dailiesWeather}
-        />
+        <div className={styles.middle_container}>
+          <CurrentWeather
+            currentResult={currentResult}
+            date={date}
+            month={month}
+            tempMinMaxData={tempMinMaxData}
+            currentCityName={currentCityName}
+          />
+          <GoogleMap currentLat={currentLat} currentLng={currentLng} />
+        </div>
+        <div className={styles.bottom_container}>
+          <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
+          <DailiesWeather
+            month={month}
+            date={date}
+            dailiesMaxTemp={dailiesMaxTemp}
+            dailiesMinTemp={dailiesMinTemp}
+            dailiesIcon={dailiesIcon}
+          />
+        </div>
       </div>
     </div>
   );
