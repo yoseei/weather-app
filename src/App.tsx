@@ -32,8 +32,10 @@ function App() {
 
   const [cityName, setCityName] = useState("");
   const [currentCityName, setCurrentCityName] = useState("");
-  const [currentLat, setCurrentLat] = useState<any>(33.2381);
-  const [currentLng, setCurrentLng] = useState<any>(131.6125);
+  const [initialLat, setInitialLat] = useState<any>();
+  const [initialLng, setInitialLng] = useState<any>();
+  const [currentLat, setCurrentLat] = useState<any>(33.246974); //33.246974
+  const [currentLng, setCurrentLng] = useState<any>(131.653347); //131.653347
   const [currentResult, setCurrentResult] = useState<CurrentResultStateType>({
     timezone: "",
     feels_like: "",
@@ -52,6 +54,44 @@ function App() {
     min_temp: "",
     max_temp: "",
   });
+
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      // 成功した時の関数
+      function successFunc(position) {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        setInitialLat(lat);
+        setInitialLng(lng);
+
+        console.log(initialLat);
+        console.log(initialLng);
+      },
+      // 失敗した時の関数
+      function errorFunc(error) {
+        // エラーコードのメッセージを定義
+        const errorMessage: any = {
+          0: "原因不明のエラーが発生しました…。",
+          1: "位置情報の取得が許可されませんでした…。",
+          2: "電波状況などで位置情報が取得できませんでした…。",
+          3: "位置情報の取得に時間がかかり過ぎてタイムアウトしました…。",
+        };
+
+        // エラーコードに合わせたエラー内容をアラート表示
+        alert(errorMessage[error.code]);
+      },
+      // option
+      {
+        enableHighAccuracy: false,
+        timeout: 8000,
+        maximumAge: 2000,
+      }
+    );
+  } else {
+    const errorMessage = "お使いの端末は、GeoLocation APIに対応していません。";
+    alert(errorMessage);
+  }
 
   // 入力した地名から緯度経度を取得する関数
   const getLatLng = async (e: any) => {
@@ -159,7 +199,7 @@ function App() {
       }
     }
     getWeatherDates();
-  }, [apiKey, currentLat, currentLng]);
+  }, [currentLat, currentLng]);
 
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
@@ -173,24 +213,32 @@ function App() {
           handleSetCityName={handleSetCityName}
         />
         <div className={styles.middle_container}>
-          <CurrentWeather
-            currentResult={currentResult}
-            date={date}
-            month={month}
-            tempMinMaxData={tempMinMaxData}
-            currentCityName={currentCityName}
-          />
-          <GoogleMap currentLat={currentLat} currentLng={currentLng} />
+          <div className={styles.current_weather_wrapper}>
+            <CurrentWeather
+              currentResult={currentResult}
+              date={date}
+              month={month}
+              tempMinMaxData={tempMinMaxData}
+              currentCityName={currentCityName}
+            />
+          </div>
+          <div className={styles.google_map_wrapper}>
+            <GoogleMap currentLat={currentLat} currentLng={currentLng} />
+          </div>
         </div>
         <div className={styles.bottom_container}>
-          <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
-          <DailiesWeather
-            month={month}
-            date={date}
-            dailiesMaxTemp={dailiesMaxTemp}
-            dailiesMinTemp={dailiesMinTemp}
-            dailiesIcon={dailiesIcon}
-          />
+          <div className={styles.recharts_wrapper}>
+            <Recharts hour={hour} hourlyTempArray={hourlyTempArray} />
+          </div>
+          <div className={styles.dailies_weather_wrapper}>
+            <DailiesWeather
+              month={month}
+              date={date}
+              dailiesMaxTemp={dailiesMaxTemp}
+              dailiesMinTemp={dailiesMinTemp}
+              dailiesIcon={dailiesIcon}
+            />
+          </div>
         </div>
       </div>
     </div>

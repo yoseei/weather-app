@@ -1,8 +1,18 @@
 .root {
+  h3 {
+    margin: 0;
+  }
+  padding-left: 30px;
   .daily_weather_container {
     display: flex;
-    li {
-      display: flex;
+    ul {
+      padding: 0;
+      li {
+        display: flex;
+        p {
+          margin-right: 20px;
+        }
+      }
     }
   }
 }

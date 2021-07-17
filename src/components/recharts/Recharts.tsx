@@ -29,10 +29,13 @@ const Recharts = ({ hour, hourlyTempArray }: PropsType) => {
     <div className={styles.root}>
       <h3>１時間ごとの予測</h3>
       <div className={styles.charts_wrapper}>
-        <p className={styles.temperature}>気温</p>
+        <div className={styles.letter_temp}>
+          <div>温</div>
+          <div>気</div>
+        </div>
         <div className={styles.charts_container}>
           <p>temperature</p>
-          <LineChart width={600} height={300} data={data}>
+          <LineChart width={500} height={300} data={data}>
             <Line type="monotone" dataKey="temp" stroke="#8884d8" />
             <CartesianGrid stroke="#ccc" />
             <XAxis dataKey="name" />

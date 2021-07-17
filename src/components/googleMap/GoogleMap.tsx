@@ -1,5 +1,3 @@
-import React from "react";
-import styles from "./GoogleMap.module.scss";
 import GoogleMapReact from "google-map-react";
 
 type StateType = {
@@ -8,11 +6,6 @@ type StateType = {
 };
 
 const GoogleMap = ({ currentLat, currentLng }: StateType) => {
-  // const defaultLatLng = {
-  //   lat: 35.7022589,
-  //   lng: 139.7744733,
-  // };
-
   // result.lon:'123' 先程のNumber関数を用いて数値に変換する
   const center = {
     lat: currentLat,
@@ -28,7 +21,7 @@ const GoogleMap = ({ currentLat, currentLng }: StateType) => {
   };
 
   return (
-    <div style={{ height: "300px", width: "300px" }}>
+    <div style={{ height: "250px", width: "400px" }}>
       <GoogleMapReact
         center={center}
         bootstrapURLKeys={{ key: GoogleMapAPIKey }}

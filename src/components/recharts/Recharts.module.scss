@@ -1,10 +1,17 @@
-.charts_wrapper {
-  display: flex;
-  align-items: center;
-  .temperature {
-    transform: rotate(270deg);
+.root {
+  h3 {
+    margin: 0;
   }
-  .charts_container {
-    text-align: center;
+  .charts_wrapper {
+    display: flex;
+    align-items: center;
+    .letter_temp {
+      div {
+        transform: rotate(270deg);
+      }
+    }
+    .charts_container {
+      text-align: center;
+    }
   }
 }

@@ -1,0 +1,34 @@
+.root {
+  .current_time {
+    color: rgb(243, 64, 64);
+    margin: 0;
+  }
+  .current_place_name {
+    margin: 0;
+    p {
+      margin: 0;
+      font-size: 1.75rem;
+      color: rgb(77, 76, 76);
+    }
+  }
+  .icon_temp_wrapper {
+    display: flex;
+    align-items: center;
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: rgb(77, 76, 76);
+  }
+  .temp_data_top {
+    font-weight: 500;
+    color: rgb(77, 76, 76);
+    margin-bottom: 5px;
+    span {
+      margin-right: 20px;
+    }
+  }
+  .temp_data_bottom {
+    span {
+      margin-right: 10px;
+    }
+  }
+}

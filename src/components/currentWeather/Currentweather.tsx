@@ -47,21 +47,27 @@ const CurrentWeather = ({
 
   return (
     <div className={styles.root}>
-      <p>
+      <p className={styles.current_time}>
         {month}月{date}日 現在時刻
       </p>
-      <h2>{currentCityName ? currentCityName : <p>現在地</p>}</h2>
-      <img src={currentResult.icon} alt="icon" />
-      <div>{currentResult.temp}℃</div>
-      <p>
-        体感温度:{currentResult.feels_like}℃ 最高気温:{tempMinMaxData.max_temp}℃
-        最低気温:
-        {tempMinMaxData.min_temp}℃
+      <h2 className={styles.current_place_name}>
+        {currentCityName ? currentCityName : <p>現在地</p>}
+      </h2>
+      <div className={styles.icon_temp_wrapper}>
+        <img src={currentResult.icon} alt="icon" />
+        <div>{currentResult.temp}℃</div>
+      </div>
+      <p className={styles.temp_data_top}>
+        <span>体感温度:{currentResult.feels_like}℃</span>
+        <span>最高気温:{tempMinMaxData.max_temp}℃</span>
+        <span>最低気温:{tempMinMaxData.min_temp}℃</span>
       </p>
-      <p>
-        <span>|</span> 風:{currentResult.wind_speed}m/s 風向き:{degWords()}{" "}
-        気圧:
-        {currentResult.pressure}hPa 湿度:{currentResult.humidity}%
+      <p className={styles.temp_data_bottom}>
+        <span style={{ color: "red" }}>|</span>
+        <span>風:{currentResult.wind_speed}m/s</span>
+        <span>{degWords()} </span>
+        <span>気圧:{currentResult.pressure}hPa</span>
+        <span>湿度:{currentResult.humidity}%</span>
       </p>
     </div>
   );

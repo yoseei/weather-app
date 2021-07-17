@@ -2,12 +2,28 @@
   width: 100vw;
   height: 100vh;
   .container {
+    width: 70vw;
+    height: 50vh;
     margin: 0 auto;
     .middle_container {
       display: flex;
+      margin: 50px 0;
+      .current_weather_wrapper {
+        flex: 1;
+      }
+      .google_map_wrapper {
+        flex: 1;
+      }
     }
     .bottom_container {
       display: flex;
+      .recharts_wrapper {
+        flex: 1;
+      }
+      .dailies_weather_wrapper {
+        flex: 1;
+        width: 90vw;
+      }
     }
   }
 }
