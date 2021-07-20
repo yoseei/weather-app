@@ -46,6 +46,8 @@
     ]
   },
   "devDependencies": {
-    "@types/google-map-react": "^2.1.2"
+    "@testing-library/dom": "^8.1.0",
+    "@types/google-map-react": "^2.1.2",
+    "prop-types": "^15.7.2"
   }
 }
