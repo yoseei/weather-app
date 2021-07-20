@@ -66,9 +66,6 @@ function App() {
 
             setInitialLat(lat);
             setInitialLng(lng);
-
-            console.log(initialLat);
-            console.log(initialLng);
           },
           // 失敗した時の関数
           function errorFunc(error) {
@@ -98,7 +95,7 @@ function App() {
     } catch (err) {
       console.log(err);
     }
-  }, [initialLat, initialLng]);
+  }, []);
 
   // 入力した地名から緯度経度を取得する関数
   const getLatLng = async (e: any) => {
@@ -199,18 +196,17 @@ function App() {
           dailiesArray[6].temp.min,
         ];
         setDailiesMinTemp(dailiesMinTempData);
-
-        console.log(dailiesMinTemp);
       } catch (err) {
         console.log(err);
       }
     }
     getWeatherDates();
-  }, [currentLat, currentLng]);
+  }, [initialLat, initialLng, currentLat, currentLng]);
 
   const handleSetCityName = (e: any) => {
     setCityName(e.target.value);
   };
+
   return (
     <div className={styles.root}>
       <div className={styles.container}>
@@ -230,7 +226,12 @@ function App() {
             />
           </div>
           <div className={styles.google_map_wrapper}>
-            <GoogleMap currentLat={currentLat} currentLng={currentLng} />
+            <GoogleMap
+              currentLat={currentLat}
+              currentLng={currentLng}
+              initialLat={initialLat}
+              initialLng={initialLng}
+            />
           </div>
         </div>
         <div className={styles.bottom_container}>

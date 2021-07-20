@@ -3,13 +3,20 @@ import GoogleMapReact from "google-map-react";
 type StateType = {
   currentLat: number;
   currentLng: number;
+  initialLat: any;
+  initialLng: any;
 };
 
-const GoogleMap = ({ currentLat, currentLng }: StateType) => {
+const GoogleMap = ({
+  currentLat,
+  currentLng,
+  initialLat,
+  initialLng,
+}: StateType) => {
   // result.lon:'123' 先程のNumber関数を用いて数値に変換する
   const center = {
-    lat: currentLat,
-    lng: currentLng,
+    lat: currentLat ? currentLat : initialLat,
+    lng: currentLng ? currentLng : initialLng,
   };
   const GoogleMapAPIKey = String(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
 
