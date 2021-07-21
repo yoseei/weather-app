@@ -100,7 +100,7 @@ function App() {
   // 入力した地名から緯度経度を取得する関数
   const getLatLng = async (e: any) => {
     e.preventDefault();
-    const geoCodingApiUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
+    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
 
     try {
       const response = await axios.get(geoCodingApiUrl);
@@ -134,7 +134,7 @@ function App() {
           humidity: data.current.humidity,
           pressure: data.current.pressure,
           temp: data.current.temp,
-          icon: `http://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`,
+          icon: `https://openweathermap.org/img/wn/${data.current.weather[0].icon}.png`,
           wind_deg: data.current.wind_deg,
           wind_speed: data.current.wind_speed,
         };
