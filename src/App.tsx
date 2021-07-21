@@ -105,12 +105,12 @@ function App() {
     try {
       const response = await axios.get(geoCodingApiUrl);
       const { data } = response;
-
+      console.log(data);
       const currentLatLng = {
         lat: data[0].lat,
         lng: data[0].lon,
       };
-      setCurrentCityName(data[0].name);
+      setCurrentCityName(data[0].local_names.ja);
       setCurrentLat(currentLatLng.lat);
       setCurrentLng(currentLatLng.lng);
     } catch (err) {
