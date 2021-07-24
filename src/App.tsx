@@ -100,17 +100,21 @@ function App() {
   // 入力した地名から緯度経度を取得する関数
   const getLatLng: any = async (e: any) => {
     e.preventDefault();
-    const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
+    const geoCodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyA6Kgrnp0Zy9GpGscfE2zulLSrLRuHP_LQ`;
+    // const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
 
     try {
       const response = await axios.get(geoCodingApiUrl);
-      const { data } = response;
-      console.log(data[0].lat);
+      // const { data } = response;
+      console.log(response.data.results[0].geometry.location); //response.data.results[0].geometry.location
       const currentLatLng = {
-        lat: data[0].lat,
-        lng: data[0].lon,
+        lat: response.data.results[0].geometry.location.lat,
+        lng: response.data.results[0].geometry.location.lng,
+        // lat: data[0].lat,
+        // lng: data[0].lon,
       };
-      setCurrentCityName(data[0].local_names.ja);
+      // setCurrentCityName(data[0].local_names.ja);
+      setCurrentCityName(cityName);
       setCurrentLat(currentLatLng.lat);
       setCurrentLng(currentLatLng.lng);
     } catch (err) {
