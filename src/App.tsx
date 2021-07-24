@@ -100,7 +100,8 @@ function App() {
   // 入力した地名から緯度経度を取得する関数
   const getLatLng: any = async (e: any) => {
     e.preventDefault();
-    const geoCodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyA6Kgrnp0Zy9GpGscfE2zulLSrLRuHP_LQ`;
+    const geoCodingAPIKEY = process.env.REACT_APP_GEOCODING_API_KEY;
+    const geoCodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=${geoCodingAPIKEY}`;
 
     try {
       const response = await axios.get(geoCodingApiUrl);
