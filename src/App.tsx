@@ -34,8 +34,8 @@ function App() {
   const [currentCityName, setCurrentCityName] = useState("");
   const [initialLat, setInitialLat] = useState<number>();
   const [initialLng, setInitialLng] = useState<number>();
-  const [currentLat, setCurrentLat] = useState<number>(0); //33.246974
-  const [currentLng, setCurrentLng] = useState<number>(0); //131.653347
+  const [currentLat, setCurrentLat] = useState<number>(0);
+  const [currentLng, setCurrentLng] = useState<number>(0);
   const [currentResult, setCurrentResult] = useState<CurrentResultStateType>({
     timezone: "",
     feels_like: "",
@@ -101,19 +101,13 @@ function App() {
   const getLatLng: any = async (e: any) => {
     e.preventDefault();
     const geoCodingApiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${cityName}&key=AIzaSyA6Kgrnp0Zy9GpGscfE2zulLSrLRuHP_LQ`;
-    // const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
 
     try {
       const response = await axios.get(geoCodingApiUrl);
-      // const { data } = response;
-      console.log(response.data.results[0].geometry.location); //response.data.results[0].geometry.location
       const currentLatLng = {
         lat: response.data.results[0].geometry.location.lat,
         lng: response.data.results[0].geometry.location.lng,
-        // lat: data[0].lat,
-        // lng: data[0].lon,
       };
-      // setCurrentCityName(data[0].local_names.ja);
       setCurrentCityName(cityName);
       setCurrentLat(currentLatLng.lat);
       setCurrentLng(currentLatLng.lng);
