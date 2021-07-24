@@ -36,11 +36,11 @@ const Recharts = ({ hour, hourlyTempArray }: PropsType) => {
         <div className={styles.charts_container}>
           <p>temperature</p>
           <LineChart width={500} height={300} data={data}>
-            <Line type="monotone" dataKey="temp" stroke="#8884d8" />
-            <CartesianGrid stroke="#ccc" />
-            <XAxis dataKey="name" />
-            <YAxis />
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name" interval="preserveStartEnd" />
+            <YAxis interval="preserveStartEnd" />
             <Tooltip />
+            <Line type="monotone" dataKey="temp" stroke="#8884d8" />
           </LineChart>
           <p>時刻</p>
         </div>

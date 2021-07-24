@@ -32,10 +32,10 @@ function App() {
 
   const [cityName, setCityName] = useState("");
   const [currentCityName, setCurrentCityName] = useState("");
-  const [initialLat, setInitialLat] = useState<any>();
-  const [initialLng, setInitialLng] = useState<any>();
-  const [currentLat, setCurrentLat] = useState<any>(0); //33.246974
-  const [currentLng, setCurrentLng] = useState<any>(0); //131.653347
+  const [initialLat, setInitialLat] = useState<number>();
+  const [initialLng, setInitialLng] = useState<number>();
+  const [currentLat, setCurrentLat] = useState<number>(0); //33.246974
+  const [currentLng, setCurrentLng] = useState<number>(0); //131.653347
   const [currentResult, setCurrentResult] = useState<CurrentResultStateType>({
     timezone: "",
     feels_like: "",
@@ -47,9 +47,9 @@ function App() {
     wind_speed: "",
   });
   const [dailiesIcon, setDailiesIcon] = useState<any>([]);
-  const [dailiesMaxTemp, setDailiesMaxTemp] = useState<any>([]);
-  const [dailiesMinTemp, setDailiesMinTemp] = useState<any>([]);
-  const [hourlyTempArray, setHourlyTempArray] = useState<any>([]);
+  const [dailiesMaxTemp, setDailiesMaxTemp] = useState<number[]>([]);
+  const [dailiesMinTemp, setDailiesMinTemp] = useState<number[]>([]);
+  const [hourlyTempArray, setHourlyTempArray] = useState<number[]>([]);
   const [tempMinMaxData, setTempMinMaxData] = useState<tempMinMaxStateType>({
     min_temp: "",
     max_temp: "",
@@ -60,7 +60,7 @@ function App() {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           // 成功した時の関数
-          function successFunc(position) {
+          async function successFunc(position) {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
 
@@ -98,14 +98,14 @@ function App() {
   }, []);
 
   // 入力した地名から緯度経度を取得する関数
-  const getLatLng = async (e: any) => {
+  const getLatLng: any = async (e: any) => {
     e.preventDefault();
     const geoCodingApiUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&appid=${apiKey}`;
 
     try {
       const response = await axios.get(geoCodingApiUrl);
       const { data } = response;
-      console.log(data);
+      console.log(data[0].lat);
       const currentLatLng = {
         lat: data[0].lat,
         lng: data[0].lon,
