@@ -60,7 +60,9 @@ const CurrentWeather = ({
       <p className={styles.temp_data_top}>
         <span>体感温度:{currentResult.feels_like}℃</span>
         <span>最高気温:{tempMinMaxData.max_temp}℃</span>
-        <span>最低気温:{tempMinMaxData.min_temp}℃</span>
+        <span className={styles.span_third}>
+          最低気温:{tempMinMaxData.min_temp}℃
+        </span>
       </p>
       <p className={styles.temp_data_bottom}>
         <span style={{ color: "red" }}>|</span>

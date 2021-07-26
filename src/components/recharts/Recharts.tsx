@@ -6,6 +6,7 @@ import {
   Tooltip,
   XAxis,
   YAxis,
+  ResponsiveContainer,
 } from "recharts";
 
 type PropsType = {
@@ -35,13 +36,16 @@ const Recharts = ({ hour, hourlyTempArray }: PropsType) => {
         </div>
         <div className={styles.charts_container}>
           <p>temperature</p>
-          <LineChart width={500} height={300} data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" interval="preserveStartEnd" />
-            <YAxis interval="preserveStartEnd" />
-            <Tooltip />
-            <Line type="monotone" dataKey="temp" stroke="#8884d8" />
-          </LineChart>
+          <ResponsiveContainer width="95%" height={300}>
+            {/* width={500} height={300} */}
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" interval="preserveStartEnd" />
+              <YAxis interval="preserveStartEnd" />
+              <Tooltip />
+              <Line type="monotone" dataKey="temp" stroke="#8884d8" />
+            </LineChart>
+          </ResponsiveContainer>
           <p>時刻</p>
         </div>
       </div>

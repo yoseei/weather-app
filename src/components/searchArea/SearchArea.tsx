@@ -19,7 +19,7 @@ const SearchArea = ({ cityName, handleSetCityName, getLatLng }: PropsType) => {
                 type="text"
                 placeholder="(例)東京都"
                 className={styles.input}
-                style={{ width: "90%" }}
+                // style={{ width: "90%" }}
               />
             </div>
             <div className={styles.button_wrapper}>

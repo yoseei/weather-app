@@ -1,0 +1,29 @@
+.root {
+  height: 250px;
+  width: 550px;
+}
+@media screen and (max-width: 1024px) {
+  .root {
+    width: 450px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .root {
+    width: 550px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .root {
+    width: 350px;
+  }
+}
+@media screen and (max-width: 375px) {
+  .root {
+    width: 320px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .root {
+    width: 280px;
+  }
+}

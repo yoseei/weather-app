@@ -1,8 +1,8 @@
 .root {
+  padding-left: 30px;
   h3 {
     margin: 0;
   }
-  padding-left: 30px;
   .daily_weather_container {
     display: flex;
     ul {
@@ -11,6 +11,61 @@
         display: flex;
         p {
           margin-right: 20px;
+        }
+        .dailiesMaxMinTemp {
+          margin-left: 20px;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .root {
+    .daily_weather_container {
+      ul {
+        // display: flex;
+        li {
+          p {
+            margin-right: 0px;
+            width: 70px;
+          }
+          img {
+            width: 60px;
+            height: 60px;
+          }
+          .dailiesMaxMinTemp {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .root {
+    padding-left: 0px;
+    .daily_weather_container {
+      display: flex;
+      justify-content: space-between;
+      ul {
+        width: 80%;
+        li {
+          width: 100%;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 425px) {
+  .root {
+    .daily_weather_container {
+      ul {
+        li {
+          width: 115%;
         }
       }
     }

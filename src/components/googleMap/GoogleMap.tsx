@@ -1,4 +1,5 @@
 import GoogleMapReact from "google-map-react";
+import styles from "./GoogleMap.module.scss";
 
 type StateType = {
   currentLat: number;
@@ -28,7 +29,8 @@ const GoogleMap = ({
   };
 
   return (
-    <div style={{ height: "250px", width: "400px" }}>
+    // <div style={{ height: "250px", width: "400px" }}>
+    <div className={styles.root}>
       <GoogleMapReact
         center={center}
         bootstrapURLKeys={{ key: GoogleMapAPIKey }}

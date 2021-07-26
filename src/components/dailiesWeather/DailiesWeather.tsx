@@ -26,7 +26,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[0]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[0])}/{Math.floor(dailiesMinTemp[0])}℃
             </p>
           </li>
@@ -38,7 +38,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[1]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[1])}/{Math.floor(dailiesMinTemp[1])}℃
             </p>
           </li>
@@ -50,7 +50,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[2]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[2])}/{Math.floor(dailiesMinTemp[2])}℃
             </p>
           </li>
@@ -62,7 +62,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[3]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[3])}/{Math.floor(dailiesMinTemp[3])}℃
             </p>
           </li>
@@ -74,7 +74,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[4]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[4])}/{Math.floor(dailiesMinTemp[4])}℃
             </p>
           </li>
@@ -86,7 +86,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[5]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[5])}/{Math.floor(dailiesMinTemp[5])}℃
             </p>
           </li>
@@ -98,7 +98,7 @@ const WeeklyWeather = ({
               src={`http://openweathermap.org/img/wn/${dailiesIcon[6]}.png`}
               alt="お天気アイコン"
             />
-            <p>
+            <p className={styles.dailiesMaxMinTemp}>
               {Math.floor(dailiesMaxTemp[6])}/{Math.floor(dailiesMinTemp[6])}℃
             </p>
           </li>

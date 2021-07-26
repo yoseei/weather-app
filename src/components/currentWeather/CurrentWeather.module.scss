@@ -32,3 +32,34 @@
     }
   }
 }
+
+@media screen and(max-width: 425px) {
+  .root {
+    width: 100vw;
+    .temp_data_top {
+      .span_third {
+        display: block;
+      }
+    }
+    .temp_data_bottom {
+      width: 75%;
+    }
+  }
+}
+@media screen and (max-width: 320px) {
+  .root {
+    .icon_temp_wrapper {
+      div {
+        font-size: 2rem;
+      }
+    }
+    .temp_data_top {
+      span {
+        display: block;
+      }
+    }
+    .temp_data_bottom {
+      width: 65%;
+    }
+  }
+}

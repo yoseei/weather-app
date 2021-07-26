@@ -20,12 +20,51 @@
         flex: 1;
         .button {
           height: 50px;
+          width: 40%;
           padding: 0 20px;
           color: white;
           background: rgb(0, 140, 255);
           border: none;
           border-radius: 5px;
           font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 768px) {
+  .root {
+    .container {
+      .form_wrapper {
+        .input_wrapper {
+          flex: none;
+          .input {
+            width: 45vw;
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and(max-width: 425px) {
+  .root {
+    .container {
+      .form_wrapper {
+        display: block;
+        .input_wrapper {
+          flex: none;
+          .input {
+            width: 80vw;
+          }
+        }
+        .button_wrapper {
+          .button {
+            width: 40vw;
+            margin-top: 10px;
+          }
         }
       }
     }

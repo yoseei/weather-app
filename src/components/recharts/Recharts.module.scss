@@ -11,7 +11,34 @@
       }
     }
     .charts_container {
+      width: 45vw;
       text-align: center;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .root {
+    .charts_wrapper {
+      .charts_container {
+        width: 100%;
+      }
+    }
+  }
+}
+@media screen and (max-width: 425px) {
+  .root {
+    .charts_wrapper {
+      .charts_container {
+        // width: 115%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .root {
+    .charts_wrapper {
+      width: 85vw;
     }
   }
 }
